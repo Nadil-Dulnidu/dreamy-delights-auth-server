@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @Validated
-@PreAuthorize("hasAnyAuthority('" + Constants.ADMIN + "')")
+@PreAuthorize("hasAuthority('" + Constants.ADMIN + "')")
 public class RoleController {
 
     @Autowired

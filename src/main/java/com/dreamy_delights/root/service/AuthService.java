@@ -23,7 +23,7 @@ public interface AuthService {
      * @throws IllegalArgumentException if the user is {@code null} or required fields are missing.
      * @throws UserAlreadyExistsException if a user with the same unique identifier (username) already exists.
      * @throws EmailAlreadyExistsException if the email already exists.
-     * @throws InvalidPasswordException if password does not match required validations.
+     * @throws InvalidUserInputException if password or username does not match required validations.
      */
     User registerUser(User user);
 

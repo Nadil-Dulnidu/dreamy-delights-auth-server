@@ -39,15 +39,15 @@ public class AuthServiceImpl implements AuthService {
             throw new EmailAlreadyExistsException("Email already exists.");
         final String password = user.getPassword();
         if (password.length() < 8)
-            throw new InvalidPasswordException("Password must be at least 8 characters long.");
+            throw new InvalidUserInputException("Password must be at least 8 characters long.");
         if (!password.matches(".*[A-Z].*"))
-            throw new InvalidPasswordException("Password must contain at least one uppercase letter.");
+            throw new InvalidUserInputException("Password must contain at least one uppercase letter.");
         if (!password.matches(".*[a-z].*"))
-            throw new InvalidPasswordException("Password must contain at least one lowercase letter.");
+            throw new InvalidUserInputException("Password must contain at least one lowercase letter.");
         if (!password.matches(".*\\d.*"))
-            throw new InvalidPasswordException("Password must contain at least one number.");
+            throw new InvalidUserInputException("Password must contain at least one number.");
         if (!password.matches(".*[^a-zA-Z0-9].*"))
-            throw new InvalidPasswordException("Password must contain at least one special character.");
+            throw new InvalidUserInputException("Password must contain at least one special character.");
         final UserEntity userEntity = UserDTOEntityMapper.map(user);
         final UserEntity savedUserEntity = userRepository.save(Objects.requireNonNull(userEntity));
         return UserDTOEntityMapper.map(savedUserEntity);

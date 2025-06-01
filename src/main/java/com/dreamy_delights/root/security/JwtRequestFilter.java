@@ -47,10 +47,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
                 // Invalid token: clear context and respond 401
-                SecurityContextHolder.clearContext();
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("""
+                {
+                  "timestamp": "%s",
+                  "status": 401,
+                  "error": "Access Denied",
+                  "message": "%s"
+                }
+                """.formatted(java.time.Instant.now(), ex.getMessage()));
                 return;
             }
         }

@@ -2,7 +2,8 @@ package com.dreamy_delights.root.service.impl;
 
 import com.dreamy_delights.root.dto.Role;
 import com.dreamy_delights.root.entity.RoleEntity;
-import com.dreamy_delights.root.exception.RoleException;
+import com.dreamy_delights.root.exception.RoleAlreadyExistsException;
+import com.dreamy_delights.root.exception.RoleNotFoundException;
 import com.dreamy_delights.root.mapper.RoleDTOEntityMapper;
 import com.dreamy_delights.root.repository.RoleRepository;
 import com.dreamy_delights.root.service.RoleService;
@@ -21,8 +22,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Role crateUserRoles(Role role) {
+    public Role createUserRoles(Role role) {
         if(Objects.isNull(role)) throw new IllegalArgumentException("Role data can not be null");
+        if(roleRepository.findByName(role.getName()) != null)
+            throw new RoleAlreadyExistsException("Role already exists");
         final RoleEntity roleEntity = RoleDTOEntityMapper.map(role);
         final RoleEntity savedRoleEntity = roleRepository.save(roleEntity);
         return RoleDTOEntityMapper.map(savedRoleEntity);
@@ -35,6 +38,6 @@ public class RoleServiceImpl implements RoleService {
         final Optional<RoleEntity> roleEntityOptional = roleRepository.findById(id);
         return roleEntityOptional
                 .map(RoleDTOEntityMapper::map)
-                .orElseThrow(() -> new RoleException("Role not found with ID: " + id));
+                .orElseThrow(() -> new RoleNotFoundException("Role not found with ID: " + id));
     }
 }

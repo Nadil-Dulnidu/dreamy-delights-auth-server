@@ -1,6 +1,8 @@
 package com.dreamy_delights.root.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,8 @@ public class RoleEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name",unique = true, nullable = false)
+    @NotBlank(message = "role name must not be blank")
     private String name;
 
 }

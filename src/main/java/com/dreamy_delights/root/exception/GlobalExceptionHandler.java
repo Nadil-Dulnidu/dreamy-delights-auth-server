@@ -47,24 +47,4 @@ public class GlobalExceptionHandler {
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    @ExceptionHandler(AuthException.class)
-    public ResponseEntity<Map<String, Object>> handleAuthorizationException(AuthException ex) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", Instant.now());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("error", "Authorization error");
-        body.put("message", ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(RoleException.class)
-    public ResponseEntity<Map<String, Object>> handleRoleException(RoleException ex) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", Instant.now());
-        body.put("status", HttpStatus.NOT_FOUND.value());
-        body.put("error", "User role error");
-        body.put("message", ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-    }
 }

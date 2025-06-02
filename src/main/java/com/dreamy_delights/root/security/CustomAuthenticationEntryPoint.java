@@ -17,10 +17,10 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setContentType("application/json");
         response.getWriter().write("""
         {
+        "error": "Forbidden",
+        "message": "Missing authentication token.",
         "timestamp": "%s",
-        "status": 403,
-        "error": "Access Denied",
-        "message": "Missing authentication token."
+        "status": 403
         }
         """.formatted(java.time.Instant.now()));
     }

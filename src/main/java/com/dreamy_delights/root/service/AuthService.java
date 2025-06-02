@@ -21,8 +21,7 @@ public interface AuthService {
      *             Required fields typically include username,email,password,phone and role_id.
      * @return the registered {@link User} object after being persisted, including any generated ID.
      * @throws IllegalArgumentException if the user is {@code null} or required fields are missing.
-     * @throws UserAlreadyExistsException if a user with the same unique identifier (username) already exists.
-     * @throws EmailAlreadyExistsException if the email already exists.
+     * @throws UserAlreadyExistsException if a user with the same unique identifier (username oe email) already exists.
      * @throws InvalidUserInputException if password or username does not match required validations.
      */
     User registerUser(User user);

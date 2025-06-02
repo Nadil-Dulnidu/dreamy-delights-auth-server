@@ -8,7 +8,9 @@ import com.dreamy_delights.root.dto.User;
 import com.dreamy_delights.root.service.AuthService;
 import com.dreamy_delights.root.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 @Validated
+@Slf4j
 public class AuthController {
 
     @Autowired

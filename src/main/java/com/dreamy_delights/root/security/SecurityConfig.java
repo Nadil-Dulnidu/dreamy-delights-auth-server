@@ -36,6 +36,8 @@ public class SecurityConfig {
             .and()
             .authorizeHttpRequests(authz -> authz
                     .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/swagger-ui/**").permitAll()
+                    .requestMatchers("/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated())
             .exceptionHandling(ex -> ex
                     .authenticationEntryPoint(authenticationEntryPoint)

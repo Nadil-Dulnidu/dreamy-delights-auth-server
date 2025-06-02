@@ -26,7 +26,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String path = request.getRequestURI();
         AntPathMatcher pathMatcher = new AntPathMatcher();
-        if (pathMatcher.match("/auth/**", path)) {
+        if (pathMatcher.match("/auth/**", path) ||
+                pathMatcher.match("/swagger-ui/**", path) ||
+                pathMatcher.match("/v3/api-docs/**", path)) {
             chain.doFilter(request, response);
             return;
         }
@@ -51,12 +53,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 response.setContentType("application/json");
                 response.getWriter().write("""
                 {
+                  "error": "Unauthorized",
+                  "message": "%s",
                   "timestamp": "%s",
                   "status": 401,
-                  "error": "Access Denied",
-                  "message": "%s"
                 }
-                """.formatted(java.time.Instant.now(), err.getMessage()));
+                """.formatted(err.getMessage(),java.time.Instant.now()));
                 return;
             }
         }

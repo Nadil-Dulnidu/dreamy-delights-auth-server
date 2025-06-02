@@ -4,6 +4,7 @@ import com.dreamy_delights.root.common.Constants;
 import com.dreamy_delights.root.dto.Role;
 import com.dreamy_delights.root.service.RoleService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @Validated
+@Slf4j
 @PreAuthorize("hasAuthority('" + Constants.ADMIN + "')")
 public class RoleController {
 

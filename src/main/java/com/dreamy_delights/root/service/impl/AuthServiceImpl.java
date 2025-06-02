@@ -46,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
         log.debug("Checking if email '{}' already exists.", user.getEmail());
         if (userRepository.findByEmail(user.getEmail()) != null) {
             log.warn("Failed to create user: Email '{}' already exists.", user.getEmail());
-            throw new EmailAlreadyExistsException("Email already exists.");
+            throw new UserAlreadyExistsException("Email already exists.");
         }
         final String password = user.getPassword();
         log.debug("Validating password strength.");

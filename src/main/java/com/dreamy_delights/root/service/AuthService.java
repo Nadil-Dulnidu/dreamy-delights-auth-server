@@ -9,7 +9,6 @@ import java.util.Map;
 
 @Service
 public interface AuthService {
-
     /**
      * Registers a new user in the system.
      *

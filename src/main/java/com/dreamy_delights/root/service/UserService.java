@@ -10,8 +10,6 @@ import java.util.Map;
 
 @Service
 public interface UserService {
-
-
     /**
      * Updates an existing user's information.
      *

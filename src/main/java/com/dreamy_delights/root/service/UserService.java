@@ -56,5 +56,5 @@ public interface UserService {
      *
      * @return a {@link List} of all {@link User} objects. Never {@code null}, but may be empty.
      */
-    List<User> getAllUsers();
+    List<User> getAllUsers(Integer role);
 }

@@ -100,12 +100,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(Integer role) {
         log.info("Fetching all users.");
         final List<UserEntity> users = userRepository.findAll();
         log.info("Total users found: {}", users.size());
         return users.stream()
                 .map(UserDTOEntityMapper::map)
+                .filter(Objects::nonNull)
+                .filter(user -> role == null || Objects.equals(user.getRole(), role))
                 .collect(Collectors.toList());
     }
 

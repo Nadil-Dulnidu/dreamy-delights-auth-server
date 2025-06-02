@@ -41,7 +41,6 @@ public abstract class User {
     @Schema(description = "Phone number of the user", example = "077-777-7777")
     protected String phone;
 
-    @NotNull(message = "Role can not be null")
     @JsonProperty("user_role")
     @Schema(description = "User belongs role id", example = "2")
     protected Integer role;

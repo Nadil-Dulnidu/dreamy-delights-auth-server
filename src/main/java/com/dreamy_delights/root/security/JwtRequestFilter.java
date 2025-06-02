@@ -26,7 +26,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String path = request.getRequestURI();
         AntPathMatcher pathMatcher = new AntPathMatcher();
-        // Skip authentication for public routes
         if (pathMatcher.match("/auth/**", path)) {
             chain.doFilter(request, response);
             return;
@@ -47,8 +46,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 }
-            } catch (Exception ex) {
-                // Invalid token: clear context and respond 401
+            } catch (Exception err) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setContentType("application/json");
                 response.getWriter().write("""
@@ -58,11 +56,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                   "error": "Access Denied",
                   "message": "%s"
                 }
-                """.formatted(java.time.Instant.now(), ex.getMessage()));
+                """.formatted(java.time.Instant.now(), err.getMessage()));
                 return;
             }
         }
-        // Always continue the chain unless you're explicitly returning a response
         chain.doFilter(request, response);
     }
 }

@@ -57,7 +57,7 @@ public interface AuthService {
      * @param refreshToken the refresh token string used to obtain a new access token; must not be {@code null}.
      * @return a {@link Map} containing token information ("accessToken", "refreshToken").
      *         Returns an empty map or throws an exception if the refresh token is invalid or expired.
-     * @throws TokenExpiredException if the provided refresh token is invalid or expired.
+     * @throws InvalidTokenException if the provided refresh token is invalid or expired.
      * @throws IllegalArgumentException if the refresh token is {@code null} or empty.
      */
     Map<String,String> refreshToken(String refreshToken);

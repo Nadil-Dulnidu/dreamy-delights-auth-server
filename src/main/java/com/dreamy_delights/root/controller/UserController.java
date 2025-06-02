@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class UserController {
     })
     @PutMapping()
     public ResponseEntity<User> updateUser(
-            @Parameter(description = "User object include user details")
+            @Parameter(description = "User object include user details",required = true)
             @Valid @RequestBody User user) {
         User updatedUser = userService.updateUser(user);
         return ResponseEntity.ok(updatedUser);
@@ -60,8 +61,8 @@ public class UserController {
     })
     @GetMapping(value = "/{id}")
     public ResponseEntity<User> getUser(
-            @Parameter(description = "User ID")
-            @Valid @PathVariable Integer id) {
+            @Parameter(description = "User ID",required = true)
+            @Valid @Min(value = 1, message = "User ID must be a positive integer") @PathVariable Integer id) {
         User user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
@@ -76,8 +77,10 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Server error")
     })
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers(
+            @Parameter(description = "filter role id (admin = 1 or user = 2 etc.)")
+            @RequestParam(required = false) Integer role) {
+        List<User> users = userService.getAllUsers(role);
         return ResponseEntity.ok(users);
     }
 
@@ -108,7 +111,9 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Server error")
     })
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<User> deleteUser(@Valid @PathVariable Integer id) {
+    public ResponseEntity<User> deleteUser(
+            @Parameter(description = "User id want to delete", required = true)
+            @Valid @Min(value = 1, message = "User ID must be a positive integer") @PathVariable Integer id) {
         User deletedUser = userService.deleteUserById(id);
         return ResponseEntity.ok(deletedUser);
     }

@@ -4,6 +4,8 @@ import com.dreamy_delights.root.dto.Role;
 import com.dreamy_delights.root.exception.RoleAlreadyExistsException;
 import com.dreamy_delights.root.exception.RoleNotFoundException;
 
+import java.util.List;
+
 public interface RoleService {
     /**
      * Creates a new user role in the system.
@@ -24,4 +26,10 @@ public interface RoleService {
      * @throws RoleNotFoundException if role not found.
      */
     Role getRoleById(Integer id);
+
+    List<Role> getAllRoles();
+
+    Role deleteUserRoles(Integer id);
+
+    Role updateUserRoles(Role role);
 }

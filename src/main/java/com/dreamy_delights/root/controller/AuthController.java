@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth")
@@ -43,10 +44,11 @@ public class AuthController {
     })
     @PostMapping(value = "/register", produces = Constants.APPLICATION_JSON, consumes = Constants.APPLICATION_JSON)
     public ResponseEntity<?> registerUser(
-            @Parameter(description = "User object including user_role")
+            @Parameter(description = "User object including user_role", required = true)
             @Valid @RequestBody Map<String, Object> payload) {
         ObjectMapper mapper = new ObjectMapper();
         Integer role = (Integer) payload.get("user_role");
+        if (Objects.isNull(role)) role = 2;
         User registeredUser;
         switch (role) {
             case 1:
@@ -75,14 +77,14 @@ public class AuthController {
     })
     @PostMapping(value = "/login", produces = Constants.APPLICATION_JSON, consumes = Constants.APPLICATION_JSON)
     public ResponseEntity<?> loginUser(
-            @Parameter(description = "Login credentials")
+            @Parameter(description = "Login credentials", required = true)
             @Valid @RequestBody final AuthRequest authRequest) {
         final Map<String,String> tokens =  authService.loginUser(authRequest);
         return ResponseEntity.ok(tokens);
     }
 
     @Operation(
-            summary = "Refresh JWT token",
+            summary = "Generate new JWT token using refresh token",
             description = "Generates a new access token using a valid refresh token"
     )
     @ApiResponses(value = {
@@ -90,9 +92,9 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Refresh token is missing or invalid"),
             @ApiResponse(responseCode = "500", description = "Internal server error"),
     })
-    @PostMapping(value = "/refresh-token", produces = Constants.APPLICATION_JSON, consumes = Constants.APPLICATION_JSON)
+    @PostMapping(value = "/refresh", produces = Constants.APPLICATION_JSON, consumes = Constants.APPLICATION_JSON)
     public ResponseEntity<?> refreshToken(
-            @Parameter(description = "Map containing the refreshToken key")
+            @Parameter(description = "Map containing the refreshToken key", required = true)
             @Valid @RequestBody Map<String, String> request) {
         String refreshToken = request.get("refreshToken");
         if (refreshToken == null) return ResponseEntity.badRequest().body("RefreshToken is null");

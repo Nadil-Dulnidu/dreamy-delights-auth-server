@@ -54,6 +54,7 @@ public interface UserService {
     /**
      * Retrieves a list of all users in the system.
      *
+     * @param role user role id for filter by role
      * @return a {@link List} of all {@link User} objects. Never {@code null}, but may be empty.
      */
     List<User> getAllUsers(Integer role);

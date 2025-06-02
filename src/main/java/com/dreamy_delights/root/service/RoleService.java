@@ -27,9 +27,29 @@ public interface RoleService {
      */
     Role getRoleById(Integer id);
 
+    /**
+     * Retrieves all available user roles from the system.
+     *
+     * @return a list of all {@link Role} entities
+     */
     List<Role> getAllRoles();
 
+    /**
+     * Deletes a user role by its unique identifier.
+     *
+     * @param id the ID of the role to delete
+     * @return the deleted {@link Role} object
+     * @throws RoleNotFoundException if the role with the given ID does not exist
+     */
     Role deleteUserRoles(Integer id);
 
+    /**
+     * Updates an existing user role with new values.
+     *
+     * @param role the {@link Role} object containing updated information
+     * @return the updated {@link Role} entity
+     * @throws RoleNotFoundException if the role to update does not exist
+     * @throws IllegalArgumentException if the input role is null
+     */
     Role updateUserRoles(Role role);
 }

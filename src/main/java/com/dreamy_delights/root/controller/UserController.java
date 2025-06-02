@@ -95,7 +95,9 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Server error")
     })
     @GetMapping(value = "/{username}")
-    public ResponseEntity<User> getUserByUsername(@Valid @PathVariable String username) {
+    public ResponseEntity<User> getUserByUsername(
+            @Parameter(description = "Username of user",required = true)
+            @Valid @PathVariable String username) {
         User user = userService.getUserByUsername(username);
         return ResponseEntity.ok(user);
     }

@@ -13,7 +13,7 @@ A secure and extensible authentication server built using **Spring Boot**, with 
 - 🔄 **Refresh Token** flow for access token renewal  
 - 🗃️ **Supabase** (PostgreSQL) as the database  
 - 📘 **Swagger UI** for interactive API documentation  
-- 🌐 **Live Deployment**: [Use the link]((https://dreamy-delights-auth.onrender.com)) <!-- Replace with actual link -->
+- 🌐 **Live Deployment Link**: https://dreamy-delights-auth.onrender.com <!-- Replace with actual link -->
 
 ---
 

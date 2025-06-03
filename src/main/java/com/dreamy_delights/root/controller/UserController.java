@@ -94,7 +94,7 @@ public class UserController {
             @ApiResponse(responseCode = "403", description = "Access denied"),
             @ApiResponse(responseCode = "500", description = "Server error")
     })
-    @GetMapping(value = "/{username}")
+    @GetMapping(value = "/username/{username}")
     public ResponseEntity<User> getUserByUsername(
             @Parameter(description = "Username of user",required = true)
             @Valid @PathVariable String username) {
